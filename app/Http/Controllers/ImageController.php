@@ -19,9 +19,9 @@ class ImageController extends Controller
         //
     }
 
-    public function file($id, Request $request){
+    public function file($id, $size, Request $request){
 //        dd($request->all()['file']);
-        $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
+        $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
         // create an image manager instance with favored driver
         $manager = new ImageManager(array('driver' => 'imagick','allow_url_fopen'=>true));
 
