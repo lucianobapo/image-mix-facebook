@@ -11,7 +11,7 @@
 |
 */
 
-//$app->get('/', function () use ($app) {
-//    return $app->version();
-//});
+$app->get('/', function () use ($app) {
+    return $app->version();
+});
 $app->get('/{id}', ['uses'=>'ImageController@file']);
