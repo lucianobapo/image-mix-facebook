@@ -21,17 +21,40 @@ class ImageController extends Controller
 
     public function file($id, $size, Request $request){
 //        dd($request->all()['file']);
-        $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-        // create an image manager instance with favored driver
+
         $manager = new ImageManager(array('driver' => 'imagick','allow_url_fopen'=>true));
 
-        // to finally create image instances
-        $image = $manager->make($source);
+        switch ($size){
+            case "large":
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                $image = $manager->make($source);
+                break;
+            case "normal":
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                $image = $manager->make($source);
+                break;
+            case "small":
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                $image = $manager->make($source);
+                break;
+            case "album":
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                $image = $manager->make($source);
+                break;
+            case "square":
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                $image = $manager->make($source);
+                break;
+            default:
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
+                $resize = explode('x',$size);
+                $image = $manager->make($source)->resize($resize[0], $resize[1]);
+                break;
+        }
+
         $background = $manager->make($request->all()['file']);
         $background->insert($image, 'center');
 
-//        $image = \Image::make($source);
         return $background->response();
-//        dd($source);
     }
 }
