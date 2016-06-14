@@ -22,7 +22,7 @@ class ImageController extends Controller
     public function file($id, $size, Request $request){
 //        dd($request->all()['file']);
 
-        $manager = new ImageManager(array('driver' => 'imagick','allow_url_fopen'=>true));
+        $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
         switch ($size){
             case "large":
