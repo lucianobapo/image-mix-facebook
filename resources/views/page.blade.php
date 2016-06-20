@@ -1,6 +1,6 @@
 <html>
     <head>
-        {{--<meta property="fb:app_id" content="{{ config('services.facebook.client_id') }}" />--}}
+        <meta property="fb:app_id" content="{{ $app_id }}" />
 
         {{--<meta name="twitter:card" content="summary_large_image" />--}}
         {{--<meta name="twitter:site" content="@DeliveryLan" />--}}
