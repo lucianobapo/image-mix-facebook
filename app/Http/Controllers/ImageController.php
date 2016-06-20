@@ -66,6 +66,14 @@ class ImageController extends Controller
     }
 
     public function page(Request $request){
-        return view('page');
+        $fields = $request->all();
+        $id = $fields['id'];
+        $file = $fields['file'];
+        $position = isset($fields['position'])?$fields['position']:'center';
+        $x = isset($fields['x'])?$fields['x']:0;
+        $y = isset($fields['y'])?$fields['y']:0;
+        $size = isset($fields['size'])?$fields['size']:'116x116';
+        $url = url()."/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size";
+        return view('page', compact('url'));
     }
 }
