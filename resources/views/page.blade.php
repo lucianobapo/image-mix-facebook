@@ -7,9 +7,9 @@
         {{--<meta name="twitter:creator" content="@DeliveryLan" />--}}
         {{--<meta name="twitter:image:alt" content="{{ trans('delivery.head.metaDescription') }}" />--}}
 
-        <meta property="og:url" content="{{ $site }}"/>
+        {{--<meta property="og:url" content="{{ $site }}"/>--}}
         <meta property="og:type" content="website"/>
-        {{--<meta property="og:title" content="{{ trans('delivery.head.title') }}"/>--}}
+        <meta property="og:title" content="{{ $title }}"/>
         {{--<meta property="og:site_name" content="{{ trans('delivery.index.title') }}"/>--}}
         <meta property="og:image" content="{!! $url !!}"/>
         {{--<meta property="og:image:url" content="{{ config('delivery.siteImage') }}"/>--}}

@@ -76,6 +76,7 @@ class ImageController extends Controller
         $url = url().("/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size");
         $app_id = isset($fields['app_id'])?$fields['app_id']:'';
         $site = isset($fields['site'])?$fields['site']:'';
-        return view('page', compact('url','app_id','site'));
+        $title = isset($fields['title'])?$fields['title']:'';
+        return view('page', compact('url','app_id','site','title'));
     }
 }
