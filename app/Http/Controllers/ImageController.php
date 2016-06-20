@@ -73,7 +73,7 @@ class ImageController extends Controller
         $x = isset($fields['x'])?$fields['x']:0;
         $y = isset($fields['y'])?$fields['y']:0;
         $size = isset($fields['size'])?$fields['size']:'116x116';
-        $url = url().urlencode("/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size");
+        $url = url().("/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size");
         return view('page', compact('url'));
     }
 }
