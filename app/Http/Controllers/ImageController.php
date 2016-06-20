@@ -75,5 +75,6 @@ class ImageController extends Controller
         $size = isset($fields['size'])?$fields['size']:'116x116';
         $url = url()."/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size";
         return view('page')->with(['url'=>urlencode($url)]);
+
     }
 }
