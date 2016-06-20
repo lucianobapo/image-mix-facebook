@@ -3,7 +3,8 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+    $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
+    $dotenv->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -39,13 +40,13 @@ $app = new Laravel\Lumen\Application(
 */
 
 $app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
+    'Illuminate\Contracts\Debug\ExceptionHandler',
+    'App\Exceptions\Handler'
 );
 
 $app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
+    'Illuminate\Contracts\Console\Kernel',
+    'App\Console\Kernel'
 );
 
 /*
@@ -95,7 +96,7 @@ $app->singleton(
 |
 */
 
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(array('namespace' => 'App\Http\Controllers'), function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 

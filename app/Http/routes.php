@@ -14,4 +14,8 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
-$app->get('/{id}/{size}', ['uses'=>'ImageController@file']);
+$app->get('/phpinfo', function () use ($app) {
+    return phpinfo();
+});
+$app->get('/file', ['uses'=>'ImageController@file']);
+$app->get('/page', ['uses'=>'ImageController@page']);

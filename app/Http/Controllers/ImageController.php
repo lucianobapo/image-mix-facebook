@@ -19,8 +19,15 @@ class ImageController extends Controller
         //
     }
 
-    public function file($id, $size, Request $request){
+    public function file(Request $request){
 //        dd($request->all()['file']);
+        $fields = $request->all();
+        $id = $fields['id'];
+        $file = $fields['file'];
+        $position = isset($fields['position'])?$fields['position']:'center';
+        $x = isset($fields['x'])?$fields['x']:0;
+        $y = isset($fields['y'])?$fields['y']:0;
+        $size = isset($fields['size'])?$fields['size']:'116x116';
 
         $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
@@ -52,9 +59,13 @@ class ImageController extends Controller
                 break;
         }
 
-        $background = $manager->make($request->all()['file']);
-        $background->insert($image, 'center');
+        $background = $manager->make($file);
+        $background->insert($image, $position, $x, $y);
 
         return $background->response();
+    }
+
+    public function page(Request $request){
+        return view('page');
     }
 }
