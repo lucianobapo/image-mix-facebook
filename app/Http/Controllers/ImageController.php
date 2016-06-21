@@ -31,7 +31,7 @@ class ImageController extends Controller
         $md5['y'] = isset($fields['y'])?$fields['y']:0;
         $md5['size'] = isset($fields['size'])?$fields['size']:'116x116';
 
-        $key = md5($md5);
+        $key = md5(serialize($md5));
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
             dd($key);
