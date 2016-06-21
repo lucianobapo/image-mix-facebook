@@ -37,31 +37,31 @@ class ImageController extends Controller
         }
         $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
-        $size = isset($md5['size'])?$md5['size']:'center';
+        $size = isset($md5['size'])?$md5['size']:'116x116';
         switch ($size){
             case "large":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
                 $image = $manager->make($source);
                 break;
             case "normal":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
                 $image = $manager->make($source);
                 break;
             case "small":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
                 $image = $manager->make($source);
                 break;
             case "album":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
                 $image = $manager->make($source);
                 break;
             case "square":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
+                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
                 $image = $manager->make($source);
                 break;
             default:
                 $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
-                $resize = explode('x',$md5['size']);
+                $resize = explode('x',$size);
                 $image = $manager->make($source)->resize($resize[0], $resize[1]);
                 break;
         }
