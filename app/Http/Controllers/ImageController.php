@@ -97,9 +97,6 @@ class ImageController extends Controller
     public function pageCached($id, $key, Request $request){
         if (Cache::has($key)) {
             $md5 = Cache::get($key);
-//            $fields = $request->all();
-//            $id = $fields['id'];
-//            $file = $fields['file'];
             $url = url();
             $url = $url.'/file?id='.$id;
             if (isset($md5['position'])) $url = $url.'&position='.$md5['position'];
