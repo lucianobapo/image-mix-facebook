@@ -72,7 +72,7 @@ class ImageController extends Controller
         $background = $manager->make($md5['file']);
         $background->insert($image, $position, $x, $y);
 
-        return $background->response('jpg',40);
+        return $background->response('jpg',20);
     }
 
     public function page(Request $request){
