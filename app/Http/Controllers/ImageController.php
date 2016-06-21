@@ -70,7 +70,7 @@ class ImageController extends Controller
         $id = $fields['id'];
         $file = $fields['file'];
         $url = url();
-        $url = $url.'?id='.$fields['id'];
+        $url = $url.'/file?id='.$fields['id'];
         if (isset($fields['position'])) $url = $url.'&position='.$fields['position'];
         if (isset($fields['x'])) $url = $url.'&x='.$fields['x'];
         if (isset($fields['y'])) $url = $url.'&y='.$fields['y'];
