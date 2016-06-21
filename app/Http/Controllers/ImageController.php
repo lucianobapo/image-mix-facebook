@@ -107,8 +107,8 @@ class ImageController extends Controller
             $url = $url.'&file='.$md5['file'];
 
             $app_id = isset($fields['app_id'])?$fields['app_id']:'';
-            $site = isset($fields['site'])?$fields['site']:url();
-            $title = isset($fields['title'])?$fields['title']:'teste';
+            $site = isset($fields['site'])?$fields['site']:'';
+            $title = isset($fields['title'])?$fields['title']:'';
 
             return view('page', compact('url','app_id','site','title'));
         } else return "chave errada";
