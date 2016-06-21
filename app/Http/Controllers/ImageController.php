@@ -25,12 +25,11 @@ class ImageController extends Controller
 //        dd($request->all()['file']);
         $fields = $request->all();
         $id = $fields['id'];
-        $md5 = [];
         $md5['file'] = $fields['file'];
-        $md5['position'] = isset($fields['position'])?$fields['position']:'center';
-        $md5['x'] = isset($fields['x'])?$fields['x']:0;
-        $md5['y'] = isset($fields['y'])?$fields['y']:0;
-        $md5['size'] = isset($fields['size'])?$fields['size']:'116x116';
+        if (isset($fields['position'])) $md5['position'] = $fields['position'];
+        if (isset($fields['size'])) $md5['size'] = $fields['size'];
+        if (isset($fields['x'])) $md5['x'] = $fields['x'];
+        if (isset($fields['y'])) $md5['y'] = $fields['y'];
 
         $key = md5(serialize($md5));
         if (!Cache::has($key)) {
