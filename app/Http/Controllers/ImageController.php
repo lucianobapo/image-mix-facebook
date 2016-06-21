@@ -37,7 +37,8 @@ class ImageController extends Controller
         }
         $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
-        switch ($md5['size']){
+        $size = isset($md5['size'])?$md5['size']:'center';
+        switch ($size){
             case "large":
                 $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$md5['size'];
                 $image = $manager->make($source);
