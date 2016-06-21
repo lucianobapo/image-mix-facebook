@@ -17,6 +17,7 @@
         {{--<meta property="og:image:type" content="image/png"/>--}}
         {{--<meta property="og:description" content="{{ trans('delivery.head.metaDescription') }}"/>--}}
         {{--<meta property="og:updated_time" content="{{ Carbon\Carbon::now()->timestamp }}"/>--}}
+        <title>{{ $title }}</title>
     </head>
     <body>
         <img src="{{ $url }}">
