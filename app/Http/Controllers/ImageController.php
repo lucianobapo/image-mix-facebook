@@ -38,6 +38,9 @@ class ImageController extends Controller
         $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
         $size = isset($md5['size'])?$md5['size']:'116x116';
+        $position = isset($md5['position'])?$md5['position']:'center';
+        $x = isset($md5['x'])?$md5['x']:0;
+        $y = isset($md5['y'])?$md5['y']:0;
         switch ($size){
             case "large":
                 $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
@@ -67,7 +70,7 @@ class ImageController extends Controller
         }
 
         $background = $manager->make($md5['file']);
-        $background->insert($image, $md5['position'], $md5['x'], $md5['x']);
+        $background->insert($image, $position, $x, $y);
 
         return $background->response();
     }
