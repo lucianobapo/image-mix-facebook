@@ -28,6 +28,8 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withEloquent();
 
+$app->configure('cache');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
