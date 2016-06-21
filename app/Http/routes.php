@@ -20,3 +20,4 @@ $app->get('/phpinfo', function () use ($app) {
 $app->get('/file', ['uses'=>'ImageController@file']);
 $app->get('/page', ['uses'=>'ImageController@page']);
 $app->get('/pageCached/{id}/{key}', ['uses'=>'ImageController@pageCached']);
+$app->get('/fileCached/{id}/{key}', ['uses'=>'ImageController@fileCached']);

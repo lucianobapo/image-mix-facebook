@@ -113,4 +113,61 @@ class ImageController extends Controller
             return view('page', compact('url','app_id','site','title'));
         } else return "chave errada";
     }
+
+    public function fileCached($id, $key, Request $request){
+        $fields = $request->all();
+        if (Cache::has($key)) {
+            $md5 = Cache::get($key);
+//            $url = url();
+//            $url = $url.'/file?id='.$id;
+//            if (isset($md5['position'])) $url = $url.'&position='.$md5['position'];
+//            if (isset($md5['x'])) $url = $url.'&x='.$md5['x'];
+//            if (isset($md5['y'])) $url = $url.'&y='.$md5['y'];
+//            if (isset($md5['size'])) $url = $url.'&size='.$md5['size'];
+//            $url = $url.'&file='.$md5['file'];
+//
+//            $app_id = isset($fields['app_id'])?$fields['app_id']:'';
+//            $site = isset($fields['site'])?$fields['site']:'';
+//            $title = isset($fields['title'])?$fields['title']:'';
+
+            $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
+
+            $size = isset($md5['size'])?$md5['size']:'116x116';
+            $position = isset($md5['position'])?$md5['position']:'center';
+            $x = isset($md5['x'])?$md5['x']:0;
+            $y = isset($md5['y'])?$md5['y']:0;
+            switch ($size){
+                case "large":
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                    $image = $manager->make($source);
+                    break;
+                case "normal":
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                    $image = $manager->make($source);
+                    break;
+                case "small":
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                    $image = $manager->make($source);
+                    break;
+                case "album":
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                    $image = $manager->make($source);
+                    break;
+                case "square":
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
+                    $image = $manager->make($source);
+                    break;
+                default:
+                    $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
+                    $resize = explode('x',$size);
+                    $image = $manager->make($source)->resize($resize[0], $resize[1]);
+                    break;
+            }
+
+            $background = $manager->make($md5['file']);
+            $background->insert($image, $position, $x, $y);
+
+            return $background->response('jpg',20);
+        } else return "chave errada";
+    }
 }
