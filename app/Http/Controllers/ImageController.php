@@ -35,9 +35,7 @@ class ImageController extends Controller
         $key = md5(serialize($md5));
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
-
         }
-        dd($key);
         $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
         switch ($md5['size']){
@@ -112,6 +110,6 @@ class ImageController extends Controller
             $title = isset($fields['title'])?$fields['title']:'teste';
 
             return view('page', compact('url','app_id','site','title'));
-        }
+        } else return "chave errada";
     }
 }
