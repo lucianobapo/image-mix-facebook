@@ -6,24 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\ImageManager;
-use Illuminate\Cache\Repository as CacheRepository;
+
 //use Intervention\Image\Facades\Image as Image;
 
 class ImageController extends Controller
 {
     /**
-     * @var CacheRepository
-     */
-    private $cache;
-
-    /**
      * Create a new controller instance.
      *
-     * @param CacheRepository $cache
+     * @return void
      */
-    public function __construct(CacheRepository $cache)
+    public function __construct()
     {
-        $this->cache = $cache;
+        //
     }
 
     public function file(Request $request){
@@ -38,8 +33,8 @@ class ImageController extends Controller
         $md5['size'] = isset($fields['size'])?$fields['size']:'116x116';
 
         $key = md5(serialize($md5));
-        if (!$this->cache->has($key)) {
-            $this->cache->put($key, $md5, 60*24*30);
+        if (!Cache::has($key)) {
+            Cache::put($key, $md5, 60*24*30);
             dd($key);
         }
 
@@ -99,8 +94,8 @@ class ImageController extends Controller
     }
 
     public function pageCached($id, $key, Request $request){
-        if ($this->cache->has($key)) {
-            $md5 = $this->cache->get($key);
+        if (Cache::has($key)) {
+            $md5 = Cache::get($key);
 //            $fields = $request->all();
 //            $id = $fields['id'];
 //            $file = $fields['file'];
