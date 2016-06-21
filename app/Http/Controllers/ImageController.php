@@ -69,14 +69,18 @@ class ImageController extends Controller
         $fields = $request->all();
         $id = $fields['id'];
         $file = $fields['file'];
-        $position = isset($fields['position'])?$fields['position']:'center';
-        $x = isset($fields['x'])?$fields['x']:0;
-        $y = isset($fields['y'])?$fields['y']:0;
-        $size = isset($fields['size'])?$fields['size']:'116x116';
-        $url = url().("/file?id=$id&file=$file&position=$position&x=$x&y=$y&size=$size");
+        $url = url();
+        $url = $url.'?id='.$fields['id'];
+        if (isset($fields['position'])) $url = $url.'&position='.$fields['position'];
+        if (isset($fields['x'])) $url = $url.'&x='.$fields['x'];
+        if (isset($fields['y'])) $url = $url.'&y='.$fields['y'];
+        if (isset($fields['size'])) $url = $url.'&size='.$fields['size'];
+        $url = $url.'&file='.$fields['file'];
+
         $app_id = isset($fields['app_id'])?$fields['app_id']:'';
         $site = isset($fields['site'])?$fields['site']:url();
-        $title = isset($fields['title'])?$fields['title']:'';
+        $title = isset($fields['title'])?$fields['title']:'teste';
+
         return view('page', compact('url','app_id','site','title'));
     }
 }
