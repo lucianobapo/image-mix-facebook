@@ -140,9 +140,9 @@ class ImageController extends Controller
         $namey = isset($md5['namey']) ? $md5['namey'] : 230;
         if (isset($md5['name']))
             $background->text($md5['name'], $namex, $namey, function ($font) {
-                $font->file(5);
-//                $font->file('foo/bar.ttf');
-//                $font->size(24);
+//                $font->file(5);
+                $font->file(base_path('resources/fonts').'/arial.ttf');
+                $font->size(24);
                 $font->color('#000000');
                 $font->align('left');
                 $font->valign('top');
