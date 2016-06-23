@@ -27,6 +27,8 @@ class ImageController extends Controller
         $id = $fields['id'];
         $md5['file'] = $fields['file'];
         if (isset($fields['name'])) $md5['name'] = $fields['name'];
+        if (isset($fields['namex'])) $md5['namex'] = $fields['namex'];
+        if (isset($fields['namey'])) $md5['namey'] = $fields['namey'];
         if (isset($fields['position'])) $md5['position'] = $fields['position'];
         if (isset($fields['size'])) $md5['size'] = $fields['size'];
         if (isset($fields['x'])) $md5['x'] = $fields['x'];
@@ -36,45 +38,7 @@ class ImageController extends Controller
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
-        $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
-
-        $size = isset($md5['size'])?$md5['size']:'116x116';
-        $position = isset($md5['position'])?$md5['position']:'center';
-        $x = isset($md5['x'])?$md5['x']:0;
-        $y = isset($md5['y'])?$md5['y']:0;
-        switch ($size){
-            case "large":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                $image = $manager->make($source);
-                break;
-            case "normal":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                $image = $manager->make($source);
-                break;
-            case "small":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                $image = $manager->make($source);
-                break;
-            case "album":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                $image = $manager->make($source);
-                break;
-            case "square":
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                $image = $manager->make($source);
-                break;
-            default:
-                $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
-                $resize = explode('x',$size);
-                $image = $manager->make($source)->resize($resize[0], $resize[1]);
-                break;
-        }
-
-        $background = $manager->make($md5['file']);
-        $background->insert($image, $position, $x, $y);
-        if (isset($md5['name'])) $background->text($md5['name']);
-
-        return $background->response('jpg',20);
+        return $this->composeImage($id, $md5);
     }
 
     public function page(Request $request){
@@ -121,44 +85,67 @@ class ImageController extends Controller
         if (Cache::has($key)) {
             $md5 = Cache::get($key);
 
-            $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
-
-            $size = isset($md5['size'])?$md5['size']:'116x116';
-            $position = isset($md5['position'])?$md5['position']:'center';
-            $x = isset($md5['x'])?$md5['x']:0;
-            $y = isset($md5['y'])?$md5['y']:0;
-            switch ($size){
-                case "large":
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                    $image = $manager->make($source);
-                    break;
-                case "normal":
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                    $image = $manager->make($source);
-                    break;
-                case "small":
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                    $image = $manager->make($source);
-                    break;
-                case "album":
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                    $image = $manager->make($source);
-                    break;
-                case "square":
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type='.$size;
-                    $image = $manager->make($source);
-                    break;
-                default:
-                    $source = 'https://graph.facebook.com/'.$id.'/picture?type=large';
-                    $resize = explode('x',$size);
-                    $image = $manager->make($source)->resize($resize[0], $resize[1]);
-                    break;
-            }
-
-            $background = $manager->make($md5['file']);
-            $background->insert($image, $position, $x, $y);
-
-            return $background->response('jpg',20);
+            return $this->composeImage($id, $md5);
         } else return "chave errada";
+    }
+
+    /**
+     * @param $id
+     * @param $md5
+     * @return mixed
+     */
+    protected function composeImage($id, $md5)
+    {
+        $manager = new ImageManager(array('driver' => 'gd', 'allow_url_fopen' => true));
+
+        $size = isset($md5['size']) ? $md5['size'] : '116x116';
+        switch ($size) {
+            case "large":
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+                $image = $manager->make($source);
+                break;
+            case "normal":
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+                $image = $manager->make($source);
+                break;
+            case "small":
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+                $image = $manager->make($source);
+                break;
+            case "album":
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+                $image = $manager->make($source);
+                break;
+            case "square":
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+                $image = $manager->make($source);
+                break;
+            default:
+                $source = 'https://graph.facebook.com/' . $id . '/picture?type=large';
+                $resize = explode('x', $size);
+                $image = $manager->make($source)->resize($resize[0], $resize[1]);
+                break;
+        }
+
+        $background = $manager->make($md5['file']);
+
+        $position = isset($md5['position']) ? $md5['position'] : 'center';
+        $x = isset($md5['x']) ? $md5['x'] : 0;
+        $y = isset($md5['y']) ? $md5['y'] : 0;
+        $background->insert($image, $position, $x, $y);
+
+        $namex = isset($md5['namex']) ? $md5['namex'] : 270;
+        $namey = isset($md5['namey']) ? $md5['namey'] : 230;
+        if (isset($md5['name']))
+            $background->text($md5['name'], $namex, $namey, function ($font) {
+                $font->file(5);
+//                $font->file('foo/bar.ttf');
+//                $font->size(24);
+                $font->color('#000000');
+                $font->align('left');
+                $font->valign('top');
+            });
+
+        return $background->response('jpg', 40);
     }
 }
