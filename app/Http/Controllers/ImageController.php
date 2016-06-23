@@ -27,6 +27,7 @@ class ImageController extends Controller
         $id = $fields['id'];
         $md5['file'] = $fields['file'];
 
+        if (isset($fields['namesize'])) $md5['namesize'] = $fields['namesize'];
         if (isset($fields['namex'])) $md5['namex'] = $fields['namex'];
         if (isset($fields['namey'])) $md5['namey'] = $fields['namey'];
         if (isset($fields['position'])) $md5['position'] = $fields['position'];
@@ -136,13 +137,14 @@ class ImageController extends Controller
         $y = isset($md5['y']) ? $md5['y'] : 0;
         $background->insert($image, $position, $x, $y);
 
+        $namesize = isset($md5['namesize']) ? $md5['namesize'] : 24;
         $namex = isset($md5['namex']) ? $md5['namex'] : 270;
         $namey = isset($md5['namey']) ? $md5['namey'] : 230;
         if (isset($md5['name']))
-            $background->text($md5['name'], $namex, $namey, function ($font) {
+            $background->text($md5['name'], $namex, $namey, function ($font) use ($namesize) {
 //                $font->file(5);
                 $font->file(base_path('resources/fonts').'/arial.ttf');
-                $font->size(24);
+                $font->size($namesize);
                 $font->color('#000000');
                 $font->align('left');
                 $font->valign('top');
