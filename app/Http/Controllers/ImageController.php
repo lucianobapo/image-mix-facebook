@@ -26,6 +26,7 @@ class ImageController extends Controller
         $fields = $request->all();
         $id = $fields['id'];
         $md5['file'] = $fields['file'];
+        if (isset($fields['name'])) $md5['name'] = $fields['name'];
         if (isset($fields['position'])) $md5['position'] = $fields['position'];
         if (isset($fields['size'])) $md5['size'] = $fields['size'];
         if (isset($fields['x'])) $md5['x'] = $fields['x'];
@@ -71,6 +72,7 @@ class ImageController extends Controller
 
         $background = $manager->make($md5['file']);
         $background->insert($image, $position, $x, $y);
+        if (isset($md5['name'])) $background->text($md5['name']);
 
         return $background->response('jpg',20);
     }
@@ -118,17 +120,6 @@ class ImageController extends Controller
         $fields = $request->all();
         if (Cache::has($key)) {
             $md5 = Cache::get($key);
-//            $url = url();
-//            $url = $url.'/file?id='.$id;
-//            if (isset($md5['position'])) $url = $url.'&position='.$md5['position'];
-//            if (isset($md5['x'])) $url = $url.'&x='.$md5['x'];
-//            if (isset($md5['y'])) $url = $url.'&y='.$md5['y'];
-//            if (isset($md5['size'])) $url = $url.'&size='.$md5['size'];
-//            $url = $url.'&file='.$md5['file'];
-//
-//            $app_id = isset($fields['app_id'])?$fields['app_id']:'';
-//            $site = isset($fields['site'])?$fields['site']:'';
-//            $title = isset($fields['title'])?$fields['title']:'';
 
             $manager = new ImageManager(array('driver' => 'gd','allow_url_fopen'=>true));
 
