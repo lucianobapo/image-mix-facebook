@@ -26,7 +26,7 @@ class ImageController extends Controller
         $fields = $request->all();
         $id = $fields['id'];
         $md5['file'] = $fields['file'];
-        if (isset($fields['name'])) $md5['name'] = $fields['name'];
+
         if (isset($fields['namex'])) $md5['namex'] = $fields['namex'];
         if (isset($fields['namey'])) $md5['namey'] = $fields['namey'];
         if (isset($fields['position'])) $md5['position'] = $fields['position'];
@@ -35,6 +35,8 @@ class ImageController extends Controller
         if (isset($fields['y'])) $md5['y'] = $fields['y'];
 
         $key = md5(serialize($md5));
+
+        if (isset($fields['name'])) $md5['name'] = $fields['name'];
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
