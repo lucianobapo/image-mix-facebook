@@ -145,7 +145,8 @@ class ImageController extends Controller
         if (isset($md5['name']))
             $background->text($md5['name'], $namex, $namey, function ($font) use ($namesize,$namecolor) {
 //                $font->file(5);
-                $font->file(base_path('resources/fonts').'/arial.ttf');
+
+                $font->file(base_path('resources/fonts').'/arialbd.ttf');
                 $font->size($namesize);
                 $font->color('#'.$namecolor);
                 $font->align('left');
