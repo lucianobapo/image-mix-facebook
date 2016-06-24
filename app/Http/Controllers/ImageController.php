@@ -139,7 +139,7 @@ class ImageController extends Controller
         $background->insert($image, $position, $x, $y);
 
         $namesize = isset($md5['namesize']) ? $md5['namesize'] : 24;
-        $namecolor = isset($md5['namecolor']) ? $md5['namecolor'] : '#000000';
+        $namecolor = isset($md5['namecolor']) ? $md5['namecolor'] : '000000';
         $namex = isset($md5['namex']) ? $md5['namex'] : 270;
         $namey = isset($md5['namey']) ? $md5['namey'] : 230;
         if (isset($md5['name']))
@@ -147,7 +147,7 @@ class ImageController extends Controller
 //                $font->file(5);
                 $font->file(base_path('resources/fonts').'/arial.ttf');
                 $font->size($namesize);
-                $font->color($namecolor);
+                $font->color('#'.$namecolor);
                 $font->align('left');
                 $font->valign('top');
             });
