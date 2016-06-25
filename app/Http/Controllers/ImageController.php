@@ -143,7 +143,7 @@ class ImageController extends Controller
         $namex = isset($md5['namex']) ? $md5['namex'] : 270;
         $namey = isset($md5['namey']) ? $md5['namey'] : 230;
         if (!is_null($name))
-            $background->text($name, $namex, $namey, function ($font) use ($namesize,$namecolor) {
+            $background->text(urldecode($name), $namex, $namey, function ($font) use ($namesize,$namecolor) {
 //                $font->file(5);
 
                 $font->file(base_path('resources/fonts').'/arialbd.ttf');
