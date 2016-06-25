@@ -26,6 +26,8 @@ class ImageController extends Controller
         $fields = $request->all();
         $id = $fields['id'];
         $md5['file'] = $fields['file'];
+        if (isset($fields['name'])) $name = $fields['name'];
+        else $name = null;
 
         if (isset($fields['namesize'])) $md5['namesize'] = $fields['namesize'];
         if (isset($fields['namecolor'])) $md5['namecolor'] = $fields['namecolor'];
@@ -38,11 +40,10 @@ class ImageController extends Controller
 
         $key = md5(serialize($md5));
 
-        if (isset($fields['name'])) $md5['name'] = $fields['name'];
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
-        return $this->composeImage($id, $md5);
+        return $this->composeImage($id, $md5, $name);
     }
 
     public function page(Request $request){
@@ -84,12 +85,11 @@ class ImageController extends Controller
         } else return "chave errada";
     }
 
-    public function fileCached($id, $key, Request $request){
+    public function fileCached($id, $key, $name=null, Request $request){
         $fields = $request->all();
         if (Cache::has($key)) {
             $md5 = Cache::get($key);
-
-            return $this->composeImage($id, $md5);
+            return $this->composeImage($id, $md5, $name);
         } else return "chave errada";
     }
 
@@ -98,7 +98,7 @@ class ImageController extends Controller
      * @param $md5
      * @return mixed
      */
-    protected function composeImage($id, $md5)
+    protected function composeImage($id, $md5, $name = null)
     {
         $manager = new ImageManager(array('driver' => 'gd', 'allow_url_fopen' => true));
 
@@ -142,8 +142,8 @@ class ImageController extends Controller
         $namecolor = isset($md5['namecolor']) ? $md5['namecolor'] : '000000';
         $namex = isset($md5['namex']) ? $md5['namex'] : 270;
         $namey = isset($md5['namey']) ? $md5['namey'] : 230;
-        if (isset($md5['name']))
-            $background->text($md5['name'], $namex, $namey, function ($font) use ($namesize,$namecolor) {
+        if (!is_null($name))
+            $background->text($name, $namex, $namey, function ($font) use ($namesize,$namecolor) {
 //                $font->file(5);
 
                 $font->file(base_path('resources/fonts').'/arialbd.ttf');
