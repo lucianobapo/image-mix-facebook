@@ -65,16 +65,23 @@ class ImageController extends Controller
         return view('page', compact('url','app_id','site','title'));
     }
 
-    public function pageCached($id, $key, Request $request){
+    public function pageCached($id, $key, $name=null, Request $request){
         $fields = $request->all();
         if (Cache::has($key)) {
             $md5 = Cache::get($key);
             $url = url();
             $url = $url.'/file?id='.$id;
+            if (!is_null($name)) $url = $url.'&name='.$name;
+
+            if (isset($md5['namesize'])) $url = $url.'&namesize='.$md5['namesize'];
+            if (isset($md5['namecolor'])) $url = $url.'&namecolor='.$md5['namecolor'];
+            if (isset($md5['namex'])) $url = $url.'&namex='.$md5['namex'];
+            if (isset($md5['namey'])) $url = $url.'&namey='.$md5['namey'];
             if (isset($md5['position'])) $url = $url.'&position='.$md5['position'];
+            if (isset($md5['size'])) $url = $url.'&size='.$md5['size'];
             if (isset($md5['x'])) $url = $url.'&x='.$md5['x'];
             if (isset($md5['y'])) $url = $url.'&y='.$md5['y'];
-            if (isset($md5['size'])) $url = $url.'&size='.$md5['size'];
+
             $url = $url.'&file='.$md5['file'];
 
             $app_id = isset($fields['app_id'])?$fields['app_id']:'';
