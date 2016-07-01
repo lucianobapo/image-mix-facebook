@@ -23,7 +23,7 @@
 
         <meta property="og:title" content="{{ $meta['title'] }}" />
         <meta property="og:description" content="{{ $meta['description'] }}" />
-        {{--<meta property="og:url" content="http://testesdivertidos-com.umbler.net/qual-jogador-famoso-e-louco-por-voce/" />--}}
+        <meta property="og:url" content="{{ $meta['url'] }}" />
         <meta property="og:site_name" content="Testes Divertidos" />
 
         <meta name="twitter:card" content="summary" />

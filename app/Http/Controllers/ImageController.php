@@ -90,6 +90,8 @@ class ImageController extends Controller
             $title = isset($fields['title'])?$fields['title']:'';
 
             $meta = [];
+            if (isset($fields['post_name'])) $meta['url'] = url().'/'.$fields['post_name'];
+            else $meta['url'] = '';
             if (isset($fields['post'])) {
                 $postmeta = DB::select('select * from wp_postmeta where post_id = '.$fields['post']);
                 foreach ($postmeta as $item) {
