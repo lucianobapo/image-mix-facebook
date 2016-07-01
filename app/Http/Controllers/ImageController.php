@@ -88,6 +88,7 @@ class ImageController extends Controller
             $site = isset($fields['site'])?$fields['site']:'';
             $title = isset($fields['title'])?$fields['title']:'';
 
+            $meta = [];
             $postmeta = DB::select('select * from wp_postmeta where post_id = 149');
             foreach ($postmeta as $item) {
                 if ($item->meta_key=="_yoast_wpseo_opengraph-description") $meta['description'] = $item->meta_value;
