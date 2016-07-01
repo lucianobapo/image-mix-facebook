@@ -12,6 +12,8 @@
 */
 
 $app->get('/', function () use ($app) {
+    $users = DB::select('select * from wp_postmeta where post_id = 149');
+    dd($users);
     return $app->version();
 });
 $app->get('/phpinfo', function () use ($app) {

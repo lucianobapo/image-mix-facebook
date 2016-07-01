@@ -29,6 +29,7 @@ $app = new Laravel\Lumen\Application(
 // $app->withEloquent();
 
 $app->configure('cache');
+$app->configure('database');
 
 /*
 |--------------------------------------------------------------------------
