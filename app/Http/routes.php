@@ -11,6 +11,16 @@
 |
 */
 
+$app->get('/{post}', function ($post) use ($app) {
+    $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
+    dd($sitename);
+    foreach ($sitename as $item) {
+        if ($item->meta_key=="_yoast_wpseo_opengraph-description") $meta['description'] = $item->meta_value;
+        if ($item->meta_key=="_yoast_wpseo_opengraph-title") $meta['title'] = $item->meta_value;
+    }
+    return Redirect::to(''.$post);
+//    dd($post);
+});
 $app->get('/', function () use ($app) {
     return $app->version();
 });
