@@ -21,14 +21,14 @@
 
         <meta property="og:locale" content="pt_BR" />
 
-        <meta property="og:title" content="Qual jogador famoso é louco por você?" />
-        <meta property="og:description" content="Grandes astros do mundo do futebol agora estão brigando para ver quem conquista você. Faça o teste agora e veja quem é o jogador que é louco por você" />
+        <meta property="og:title" content="{{ $meta['title'] }}" />
+        <meta property="og:description" content="{{ $meta['description'] }}" />
         <meta property="og:url" content="http://testesdivertidos-com.umbler.net/qual-jogador-famoso-e-louco-por-voce/" />
         <meta property="og:site_name" content="Testes Divertidos" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:description" content="Grandes astros do mundo do futebol agora estão brigando para ver quem conquista você. Faça o teste agora e veja quem é o jogador que é louco por você" />
-        <meta name="twitter:title" content="Qual jogador famoso é louco por você?" />
+        <meta name="twitter:description" content="{{ $meta['description'] }}" />
+        <meta name="twitter:title" content="{{ $meta['title'] }}" />
         <meta name="twitter:image" content="{!! $url !!}" />
 
         <title>{{ $title }}</title>
