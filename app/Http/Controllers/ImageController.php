@@ -108,6 +108,11 @@ class ImageController extends Controller
         } else return "chave errada";
     }
 
+    public function redirect($post){
+        $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
+        return redirect()->to($sitename[0]->option_value.'/'.$post);
+//        return Redirect::to();
+    }
     public function fileCached($id, $key, $name=null, Request $request){
         $fields = $request->all();
         if (Cache::has($key)) {

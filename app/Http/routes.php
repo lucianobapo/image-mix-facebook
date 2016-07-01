@@ -11,10 +11,10 @@
 |
 */
 
-$app->get('/redirect/{post}', function ($post) {
-    $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
-    return Redirect::to($sitename[0]->option_value.'/'.$post);
-});
+//$app->get('/redirect/{post}', function ($post) {
+//    $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
+//    return Redirect::to($sitename[0]->option_value.'/'.$post);
+//});
 $app->get('/', function () use ($app) {
     return $app->version();
 });
@@ -25,3 +25,4 @@ $app->get('/file', ['uses'=>'ImageController@file']);
 $app->get('/page', ['uses'=>'ImageController@page']);
 $app->get('/pageCached/{id}/{key}/{name}', ['uses'=>'ImageController@pageCached']);
 $app->get('/fileCached/{id}/{key}/{name}', ['uses'=>'ImageController@fileCached']);
+$app->get('/redirect/{post}', ['uses'=>'ImageController@redirect']);
