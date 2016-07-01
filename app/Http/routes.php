@@ -22,6 +22,8 @@ $app->get('/{post}', function ($post) use ($app) {
 //    dd($post);
 });
 $app->get('/', function () use ($app) {
+    $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
+    dd($sitename);
     return $app->version();
 });
 $app->get('/phpinfo', function () use ($app) {
