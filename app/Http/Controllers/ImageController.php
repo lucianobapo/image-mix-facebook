@@ -90,7 +90,9 @@ class ImageController extends Controller
             $title = isset($fields['title'])?$fields['title']:'';
 
             $meta = [];
-            if (isset($fields['post_name'])) $meta['url'] = url().'/redirect/'.$fields['post_name'];
+            $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
+            if (isset($fields['post_name'])) $meta['url'] = $sitename[0]->option_value.'/'.$fields['post_name'];
+//            if (isset($fields['post_name'])) $meta['url'] = url().'/'.$fields['post_name'];
             else $meta['url'] = '';
             if (isset($fields['post'])) {
                 $postmeta = DB::select('select * from wp_postmeta where post_id = '.$fields['post']);
