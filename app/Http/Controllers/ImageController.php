@@ -92,7 +92,7 @@ class ImageController extends Controller
 
             $meta = [];
             $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
-            if (isset($fields['post_name'])) $meta['url'] = $sitename[0]->option_value.'/'.$fields['post_name'];
+            if (isset($fields['post_name'])) $meta['url'] = $sitename[0]->option_value.'/?p='.$fields['post'];
 //            if (isset($fields['post_name'])) $meta['url'] = url().'/'.$fields['post_name'];
             else $meta['url'] = '';
             if (isset($fields['post'])) {
