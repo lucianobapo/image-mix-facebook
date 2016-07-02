@@ -135,43 +135,26 @@ class ImageController extends Controller
         $manager = new ImageManager(array('driver' => 'gd', 'allow_url_fopen' => true));
 
         $size = isset($md5['size']) ? $md5['size'] : '116x116';
-        switch ($size) {
-            case "large":
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-                $image = $manager->make($source);
-                break;
-            case "normal":
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-                $image = $manager->make($source);
-                break;
-            case "small":
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-                $image = $manager->make($source);
-                break;
-            case "album":
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-                $image = $manager->make($source);
-                break;
-            case "square":
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-                $image = $manager->make($source);
-                break;
-            default:
-                $source = 'https://graph.facebook.com/' . $id . '/picture?type=large';
-                $resize = explode('x', $size);
-                $image = $manager->make($source)->resize($resize[0], $resize[1]);
-                break;
+        if ($size=="large" || $size=="normal" || $size=="small" || $size=="album" || $size=="square") {
+            $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
+//            $image = $manager->make($source);
+            $image = $manager->cache(function($image) use ($source) {
+                $image->make($source);
+            }, (60*24*30), true);
+        } else {
+            $source = 'https://graph.facebook.com/' . $id . '/picture?type=large';
+            $resize = explode('x', $size);
+//            $image = $manager->make($source)->resize($resize[0], $resize[1]);
+            $image = $manager->cache(function($image) use ($source, $resize) {
+                $image->make($source)->resize($resize[0], $resize[1]);
+            }, (60*24*30), true);
         }
 
-//        $key = md5($md5['file']);
-//        if (Cache::has($key)) {
-//            $background = Cache::get($key);
-//        }else{
-//            $background = $manager->make($md5['file']);
-//            Cache::put($key, $background, 60*24*30);
-//        }
+        $background = $manager->cache(function($image) use ($md5) {
+            $image->make($md5['file']);
+        }, (60*24*30), true);
 
-        $background = $manager->make($md5['file']);
+//        $background = $manager->make($md5['file']);
 
         $position = isset($md5['position']) ? $md5['position'] : 'center';
         $x = isset($md5['x']) ? $md5['x'] : 0;
