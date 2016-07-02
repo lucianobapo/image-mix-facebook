@@ -1,6 +1,6 @@
 <html>
     <head>
-        <meta http-equiv="refresh" content="5;URL={{ $meta['url'] }}">
+        <meta http-equiv="refresh" content="1;URL={{ $meta['url'] }}">
 
         {{--<meta property="fb:app_id" content="{{ $app_id }}" />--}}
         <meta property="fb:app_id" content="1065386780209103" />

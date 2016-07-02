@@ -162,7 +162,13 @@ class ImageController extends Controller
                 break;
         }
 
-        $background = $manager->make($md5['file']);
+        $key = md5($md5['file']);
+        if (Cache::has($key)) {
+            $background = Cache::get($key);
+        }else{
+            $background = $manager->make($md5['file']);
+            Cache::put($key, $background, 60*24*30);
+        }
 
         $position = isset($md5['position']) ? $md5['position'] : 'center';
         $x = isset($md5['x']) ? $md5['x'] : 0;
