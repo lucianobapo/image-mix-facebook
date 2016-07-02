@@ -137,17 +137,17 @@ class ImageController extends Controller
         $size = isset($md5['size']) ? $md5['size'] : '116x116';
         if ($size=="large" || $size=="normal" || $size=="small" || $size=="album" || $size=="square") {
             $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-//            $image = $manager->make($source);
-            $image = $manager->cache(function($image) use ($source) {
-                $image->make($source);
-            }, (60*24*30), true);
+            $image = $manager->make($source);
+//            $image = $manager->cache(function($image) use ($source) {
+//                $image->make($source);
+//            }, (60*24*30), true);
         } else {
             $source = 'https://graph.facebook.com/' . $id . '/picture?type=large';
             $resize = explode('x', $size);
-//            $image = $manager->make($source)->resize($resize[0], $resize[1]);
-            $image = $manager->cache(function($image) use ($source, $resize) {
-                $image->make($source)->resize($resize[0], $resize[1]);
-            }, (60*24*30), true);
+            $image = $manager->make($source)->resize($resize[0], $resize[1]);
+//            $image = $manager->cache(function($image) use ($source, $resize) {
+//                $image->make($source)->resize($resize[0], $resize[1]);
+//            }, (60*24*30), true);
         }
 
 //        $background = $manager->cache(function($image) use ($md5) {
