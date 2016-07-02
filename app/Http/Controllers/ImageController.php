@@ -132,28 +132,35 @@ class ImageController extends Controller
      */
     protected function composeImage($id, $md5, $name = null)
     {
-        $manager = new ImageManager(array('driver' => 'gd', 'allow_url_fopen' => true));
+        $manager = new ImageManager(array(
+            'driver' => 'gd',
+            'allow_url_fopen' => true,
+            'cache' => [
+                'path' => storage_path('framework/cache/image'),
+//                'path' => __DIR__.'/../../../storage/cache',
+            ],
+        ));
 
         $size = isset($md5['size']) ? $md5['size'] : '116x116';
         if ($size=="large" || $size=="normal" || $size=="small" || $size=="album" || $size=="square") {
             $source = 'https://graph.facebook.com/' . $id . '/picture?type=' . $size;
-            $image = $manager->make($source);
-//            $image = $manager->cache(function($image) use ($source) {
-//                $image->make($source);
-//            }, (60*24*30), true);
+//            $image = $manager->make($source);
+            $image = $manager->cache(function($image) use ($source) {
+                $image->make($source);
+            }, (60*24*30), true);
         } else {
             $source = 'https://graph.facebook.com/' . $id . '/picture?type=large';
             $resize = explode('x', $size);
-            $image = $manager->make($source)->resize($resize[0], $resize[1]);
-//            $image = $manager->cache(function($image) use ($source, $resize) {
-//                $image->make($source)->resize($resize[0], $resize[1]);
-//            }, (60*24*30), true);
+//            $image = $manager->make($source)->resize($resize[0], $resize[1]);
+            $image = $manager->cache(function($image) use ($source, $resize) {
+                $image->make($source)->resize($resize[0], $resize[1]);
+            }, (60*24*30), true);
         }
 
-//        $background = $manager->cache(function($image) use ($md5) {
-//            $image->make($md5['file']);
-//        }, (60*24*30), true);
-        $background = $manager->make($md5['file']);
+        $background = $manager->cache(function($image) use ($md5) {
+            $image->make($md5['file']);
+        }, (60*24*30), true);
+//        $background = $manager->make($md5['file']);
 
         $position = isset($md5['position']) ? $md5['position'] : 'center';
         $x = isset($md5['x']) ? $md5['x'] : 0;
