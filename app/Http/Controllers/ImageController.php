@@ -44,6 +44,7 @@ class ImageController extends Controller
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
+//        dd($md5);
         return $this->composeImage($id, $md5, $name);
     }
 
@@ -162,13 +163,15 @@ class ImageController extends Controller
                 break;
         }
 
-        $key = md5($md5['file']);
-        if (Cache::has($key)) {
-            $background = Cache::get($key);
-        }else{
-            $background = $manager->make($md5['file']);
-            Cache::put($key, $background, 60*24*30);
-        }
+//        $key = md5($md5['file']);
+//        if (Cache::has($key)) {
+//            $background = Cache::get($key);
+//        }else{
+//            $background = $manager->make($md5['file']);
+//            Cache::put($key, $background, 60*24*30);
+//        }
+
+        $background = $manager->make($md5['file']);
 
         $position = isset($md5['position']) ? $md5['position'] : 'center';
         $x = isset($md5['x']) ? $md5['x'] : 0;
