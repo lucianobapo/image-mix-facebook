@@ -1,7 +1,0 @@
-# PHP 5.5
-AddHandler application/x-httpd-php55 .php
-
-suPHP_ConfigPath /opt/php55/lib
-
-RewriteEngine On
-RewriteRule ^(.*)$ public/$1 [L]
