@@ -10,7 +10,7 @@
         {{--<meta name="twitter:creator" content="@DeliveryLan" />--}}
         {{--<meta name="twitter:image:alt" content="{{ trans('delivery.head.metaDescription') }}" />--}}
 
-{{--        <meta property="og:url" content="{{ url() }}"/>--}}
+        <meta property="og:url" content="{{ url().$_SERVER['REQUEST_URI'] }}"/>
         <meta property="og:type" content="website"/>
         {{--<meta property="og:title" content="{{ $title }}"/>--}}
         {{--<meta property="og:site_name" content="{{ trans('delivery.index.title') }}"/>--}}
