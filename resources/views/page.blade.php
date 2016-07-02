@@ -12,7 +12,7 @@
 
 {{--        <meta property="og:url" content="{{ $site }}"/>--}}
         <meta property="og:type" content="website"/>
-        <meta property="og:title" content="{{ $title }}"/>
+        {{--<meta property="og:title" content="{{ $title }}"/>--}}
         {{--<meta property="og:site_name" content="{{ trans('delivery.index.title') }}"/>--}}
         <meta property="og:image" content="{!! $url !!}"/>
         {{--<meta property="og:image:url" content="{{ config('delivery.siteImage') }}"/>--}}
