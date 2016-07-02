@@ -150,10 +150,10 @@ class ImageController extends Controller
 //            }, (60*24*30), true);
         }
 
-        $background = $manager->cache(function($image) use ($md5) {
-            $image->make($md5['file']);
-        }, (60*24*30), true);
-//        $background = $manager->make($md5['file']);
+//        $background = $manager->cache(function($image) use ($md5) {
+//            $image->make($md5['file']);
+//        }, (60*24*30), true);
+        $background = $manager->make($md5['file']);
 
         $position = isset($md5['position']) ? $md5['position'] : 'center';
         $x = isset($md5['x']) ? $md5['x'] : 0;
