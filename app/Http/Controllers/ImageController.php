@@ -90,26 +90,20 @@ class ImageController extends Controller
             $site = isset($fields['site'])?$fields['site']:'';
             $title = isset($fields['title'])?$fields['title']:'';
 
-            $meta = [];
+            $meta['url'] = '';
+            $meta['description'] = '';
+            $meta['title'] = '';
             $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
             if (isset($fields['post'])) $meta['url'] = $sitename[0]->option_value.'/?p='.$fields['post'];
-//            if (isset($fields['post_name'])) $meta['url'] = url().'/'.$fields['post_name'];
-            else $meta['url'] = '';
             if (isset($fields['post'])) {
                 $postmeta = DB::select('select * from wp_postmeta where post_id = '.$fields['post']);
                 foreach ($postmeta as $item) {
                     if ($item->meta_key=="_yoast_wpseo_opengraph-description")
                         $meta['description'] = $item->meta_value;
-                    else $meta['description'] = '';
                     if ($item->meta_key=="_yoast_wpseo_opengraph-title")
                         $meta['title'] = $item->meta_value;
-                    else $meta['title'] = '';
                 }
-            } else {
-                $meta['description'] = '';
-                $meta['title'] = '';
             }
-
 
             return view('page', compact('url','app_id','site','title','meta'));
         } else return "chave errada";
