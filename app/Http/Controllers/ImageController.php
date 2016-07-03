@@ -98,8 +98,12 @@ class ImageController extends Controller
             if (isset($fields['post'])) {
                 $postmeta = DB::select('select * from wp_postmeta where post_id = '.$fields['post']);
                 foreach ($postmeta as $item) {
-                    if ($item->meta_key=="_yoast_wpseo_opengraph-description") $meta['description'] = $item->meta_value;
-                    if ($item->meta_key=="_yoast_wpseo_opengraph-title") $meta['title'] = $item->meta_value;
+                    if ($item->meta_key=="_yoast_wpseo_opengraph-description")
+                        $meta['description'] = $item->meta_value;
+                    else $meta['description'] = '';
+                    if ($item->meta_key=="_yoast_wpseo_opengraph-title")
+                        $meta['title'] = $item->meta_value;
+                    else $meta['title'] = '';
                 }
             } else {
                 $meta['description'] = '';
