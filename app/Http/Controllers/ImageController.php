@@ -51,7 +51,6 @@ class ImageController extends Controller
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
-//        dd($md5);
         return $imageResponse;
     }
 
@@ -103,6 +102,7 @@ class ImageController extends Controller
             $meta['imageFile'] = '';
             if (isset($md5['imageFile']))
                 $meta['imageFile'] = env('S3_URL').'img-mixed/'.$md5['imageFile'];
+            dd($meta);
 
             $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
             if (isset($fields['post'])) $meta['url'] = $sitename[0]->option_value.'/?p='.$fields['post'];
