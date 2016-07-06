@@ -43,11 +43,12 @@ class ImageController extends Controller
         if (isset($fields['x'])) $md5['x'] = $fields['x'];
         if (isset($fields['y'])) $md5['y'] = $fields['y'];
 
+        $key = md5(serialize($md5));
+
         $imageResponse = $this->composeImage($id, $md5, $name);
 
         if (!is_null($this->fileName)) $md5['imageFile'] = $this->fileName;
 
-        $key = md5(serialize($md5));
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
