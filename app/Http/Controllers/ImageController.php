@@ -102,7 +102,7 @@ class ImageController extends Controller
             $meta['imageFile'] = '';
             if (isset($md5['imageFile']))
                 $meta['imageFile'] = env('S3_URL').'img-mixed/'.$md5['imageFile'];
-            dd($meta);
+            dd($md5);
 
             $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
             if (isset($fields['post'])) $meta['url'] = $sitename[0]->option_value.'/?p='.$fields['post'];
