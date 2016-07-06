@@ -180,6 +180,6 @@ class ImageController extends Controller
                 $font->valign('top');
             });
 
-        return $background->response('jpg', 70);
+        return $background->response('jpg', 55);
     }
 }
