@@ -191,7 +191,9 @@ class ImageController extends Controller
                 $font->valign('top');
             });
 
-        $this->fileName = $this->fileManager->saveJpg($background->stream(),'img-mixed');
+        $slug = str_replace(['.',':','/'],'',substr($md5['file'],0,-4));
+        $newName = $slug.$id.substr($md5['file'],-4);
+        $this->fileName = $this->fileManager->saveJpg($background->stream(),'img-mixed', $newName);
 
         return $background->response('jpg', 55);
     }
