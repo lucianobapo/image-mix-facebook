@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucianobapo/erpnet-file-manager.git",
-                "reference": "8e96c9f7d6bafaab4b08763d40544105a51a40d6"
+                "reference": "a102a748874fcd88b31f813f9e5ceeb4760ab05f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/8e96c9f7d6bafaab4b08763d40544105a51a40d6",
-                "reference": "8e96c9f7d6bafaab4b08763d40544105a51a40d6",
+                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/a102a748874fcd88b31f813f9e5ceeb4760ab05f",
+                "reference": "a102a748874fcd88b31f813f9e5ceeb4760ab05f",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
                     "email": "luciano.bapo@gmail.com"
                 }
             ],
-            "time": "2016-07-06 09:30:25"
+            "time": "2016-07-06 10:29:37"
         },
         {
             "name": "illuminate/auth",
