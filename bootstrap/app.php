@@ -30,6 +30,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->configure('cache');
 $app->configure('database');
+$app->configure('filesystems');
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,10 @@ $app->singleton(
     'Illuminate\Contracts\Console\Kernel',
     'App\Console\Kernel'
 );
+
+$app->singleton('filesystem', function ($app) {
+    return $app->loadComponent('filesystems', 'Illuminate\Filesystem\FilesystemServiceProvider', 'filesystem');
+});
 
 /*
 |--------------------------------------------------------------------------

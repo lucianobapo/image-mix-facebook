@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use ErpNET\FileManager\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 
 //use Intervention\Image\Facades\Image as Image;
 
 class ImageController extends Controller
 {
+    protected $fileManager;
+    protected $fileName = null;
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param FileManager $fileManager
      */
-    public function __construct()
+    public function __construct(FileManager $fileManager)
     {
-        //
+        $this->fileManager = $fileManager;
     }
 
     public function file(Request $request){
@@ -39,13 +43,16 @@ class ImageController extends Controller
         if (isset($fields['x'])) $md5['x'] = $fields['x'];
         if (isset($fields['y'])) $md5['y'] = $fields['y'];
 
-        $key = md5(serialize($md5));
+        $imageResponse = $this->composeImage($id, $md5, $name);
 
+        if (!is_null($this->fileName)) $md5['imageFile'] = $this->fileName;
+
+        $key = md5(serialize($md5));
         if (!Cache::has($key)) {
             Cache::put($key, $md5, 60*24*30);
         }
 //        dd($md5);
-        return $this->composeImage($id, $md5, $name);
+        return $imageResponse;
     }
 
     public function page(Request $request){
@@ -93,6 +100,10 @@ class ImageController extends Controller
             $meta['url'] = '';
             $meta['description'] = '';
             $meta['title'] = '';
+            $meta['imageFile'] = '';
+            if (isset($md5['imageFile']))
+                $meta['imageFile'] = env('S3_URL').'img-mixed/'.$md5['imageFile'];
+
             $sitename = DB::select('select * from wp_options where `option_name` LIKE \'siteurl\'');
             if (isset($fields['post'])) $meta['url'] = $sitename[0]->option_value.'/?p='.$fields['post'];
             if (isset($fields['post'])) {
@@ -179,6 +190,8 @@ class ImageController extends Controller
                 $font->align('left');
                 $font->valign('top');
             });
+
+        $this->fileName = $this->fileManager->saveJpg($background->stream(),'img-mixed');
 
         return $background->response('jpg', 55);
     }

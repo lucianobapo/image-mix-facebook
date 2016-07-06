@@ -14,7 +14,7 @@
         <meta property="og:type" content="website"/>
         {{--<meta property="og:title" content="{{ $title }}"/>--}}
         {{--<meta property="og:site_name" content="{{ trans('delivery.index.title') }}"/>--}}
-        <meta property="og:image" content="{!! $url !!}"/>
+        <meta property="og:image" content="{!! isset($meta['imageFile'])?$meta['imageFile']:$url !!}"/>
         {{--<meta property="og:image:url" content="{{ config('delivery.siteImage') }}"/>--}}
         {{--<meta property="og:image:secure_url" content="{{ config('delivery.siteSecureImage') }}"/>--}}
         {{--<meta property="og:image:type" content="image/png"/>--}}
@@ -31,7 +31,7 @@
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:description" content="{{ $meta['description'] }}" />
         <meta name="twitter:title" content="{{ $meta['title'] }}" />
-        <meta name="twitter:image" content="{!! $url !!}" />
+        <meta name="twitter:image" content="{!! isset($meta['imageFile'])?$meta['imageFile']:$url !!}" />
 
         <title>{{ $title }}</title>
     </head>
