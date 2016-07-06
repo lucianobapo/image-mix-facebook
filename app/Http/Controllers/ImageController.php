@@ -49,9 +49,10 @@ class ImageController extends Controller
 
         if (!is_null($this->fileName)) $md5['imageFile'] = $this->fileName;
 
-        if (!Cache::has($key)) {
-            Cache::put($key, $md5, 60*24*30);
-        }
+        Cache::put($key, $md5, 60*24*30);
+//        if (!Cache::has($key)) {
+//            Cache::put($key, $md5, 60*24*30);
+//        }
         return $imageResponse;
     }
 
